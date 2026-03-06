@@ -1,0 +1,10 @@
+[package]
+name = "plist_diff"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+jkcli = { version = "0.1.0" }
+plist = { version = "1.8" }
+plist-macro = { version = "0.1.6" }
+owo-colors = { version = "4.3" }
