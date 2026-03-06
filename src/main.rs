@@ -153,7 +153,15 @@ fn do_cmp(ref_p: &Value, com_p: &Value, current_path: &mut Vec<String>) -> bool 
                     if let Some(ci) = best {
                         com_matched[ci] = true;
                         let mut child_path = current_path.clone();
-                        child_path.push(format!("[{}]", ri));
+                        let label = if let Value::Dictionary(d) = ref_item {
+                            d.get("db_entry_kind")
+                                .and_then(|v| v.as_string())
+                                .map(|s| format!("{}[{}]", s, ri))
+                        } else {
+                            None
+                        }
+                        .unwrap_or_else(|| format!("[{}]", ri));
+                        child_path.push(label);
                         if !do_cmp(ref_item, &com_arr[ci], &mut child_path) {
                             is_still_equal = false;
                         }
